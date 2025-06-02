@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "393054787481",
+    "project_id": "lost-and-found-mrgs",
+    "storage_bucket": "lost-and-found-mrgs.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393054787481:android:6cc1d26b624a4c0f92a508",
+        "android_client_info": {
+          "package_name": "com.mrgs.lostandfound"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393054787481-e0j5bgmfu6hr42pce4p7f60m1hpuutju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArtRWtoUPBmvWzRhhjNP5Py2YiFJvzCxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393054787481-e0j5bgmfu6hr42pce4p7f60m1hpuutju.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
