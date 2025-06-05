@@ -1,4 +1,5 @@
-package com.mrgs.lostandfound
+package nz.school.mrgs.lostfound
+
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="nz.school.mrgs.lostfound" />
+                  <option name="mobileSdkAppId" value="1:277484703065:android:0b750c1c1fea6a37035048" />
+                  <option name="projectId" value="lost-and-found-mrgs-2025" />
+                  <option name="projectNumber" value="277484703065" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

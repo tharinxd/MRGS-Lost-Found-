@@ -1,8 +1,8 @@
 pluginManagement {
     repositories {
         google()
-        gradlePluginPortal()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 
@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MRGS Lost & Found"
+rootProject.name = "MRGSLostFound"
 include(":app")
