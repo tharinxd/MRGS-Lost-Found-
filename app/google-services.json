@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "277484703065",
-    "project_id": "lost-and-found-mrgs-2025",
-    "storage_bucket": "lost-and-found-mrgs-2025.firebasestorage.app"
+    "project_number": "419808596245",
+    "project_id": "mrgslostfound",
+    "storage_bucket": "mrgslostfound.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:277484703065:android:0b750c1c1fea6a37035048",
+        "mobilesdk_app_id": "1:419808596245:android:dffaa08005780709b8191c",
         "android_client_info": {
           "package_name": "nz.school.mrgs.lostfound"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCNa1VlIhc095bixYqKpexVLmokAVCs5yk"
+          "current_key": "AIzaSyAJLSsmph5t9VvqX_T02BExPAFaXJUdGro"
         }
       ],
       "services": {
