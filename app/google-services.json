@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "419808596245",
+    "project_id": "mrgslostfound",
+    "storage_bucket": "mrgslostfound.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419808596245:android:dffaa08005780709b8191c",
+        "android_client_info": {
+          "package_name": "nz.school.mrgs.lostfound"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "419808596245-qm0c3eediqdpvhpgempae78o4f4eut2h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nz.school.mrgs.lostfound",
+            "certificate_hash": "19805ccb430cd1756e2e849f28c30b31934abf22"
+          }
+        },
+        {
+          "client_id": "419808596245-qt71l37kf14khg6pfli6ulhk1mqs4imc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJLSsmph5t9VvqX_T02BExPAFaXJUdGro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "419808596245-qt71l37kf14khg6pfli6ulhk1mqs4imc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
