@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         // The '.requestIdToken()' part is important. It asks Google for a special, secure token.
         // I need this token to prove to Firebase that the user is who they say they are.
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            // I've replaced this placeholder with my actual Web Client ID from Google Cloud.
+            // TODO: Teacher, I've replaced this placeholder with my actual Web Client ID from Google Cloud.
             .requestIdToken("419808596245-tmibfe8npckvb4dcbu0l5bn8o2ico2b3.apps.googleusercontent.com")
             .requestEmail()
             .build()
@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
 
         // This sets up the listener for my "Continue with Google" button.
         // When it's clicked, it will run the 'signInWithGoogle()' function.
-        binding.btnGoogleSignin.setOnClickListener {
+        binding.btnGoogleSignIn.setOnClickListener {
             signInWithGoogle()
         }
     }
@@ -72,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
             } catch (e: ApiException) {
                 // This 'catch' block handles errors, like if the user closes the pop-up.
                 Log.w("LoginActivity", "Google sign in failed", e)
-                Toast.makeText(this, "Google Sign-In Failed.", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this, "Google Sign-In Failed.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -95,29 +95,32 @@ class LoginActivity : AppCompatActivity() {
                     val user = auth.currentUser
                     val schoolDomain = "students.mrgs.school.nz" // This is the domain I want to allow.
 
-                    if (user.email!!.contains(schoolDomain)) {
+                    if (user != null && user.email != null && user.email!!.endsWith(schoolDomain)) {
                         // The email matches the school domain! So I let them in.
-                        Toast.makeText(this, "School account verified.", Toast.LENGTH_SHORT).show()
+                        // Toast.makeText(this, "School account verified.", Toast.LENGTH_SHORT).show()
                         navigateToDashboard()
                     } else {
                         // This runs if they logged in with a non-school email, like a personal gmail.
                         // I show them an error message telling them they need to use a school account.
-                        Toast.makeText(this, "Only users from the $schoolDomain domain are allowed.", Toast.LENGTH_LONG).show()
+                        // Toast.makeText(this, "Only users from the $schoolDomain domain are allowed.", Toast.LENGTH_LONG).show()
 
-                        // Then I immediately sign them out of Firebase.
+                        // Then I immediately sign them out of both Firebase and Google.
+                        // Signing out of the Google client is important because it lets them
+                        // choose a different account next time.
                         auth.signOut()
+                        googleSignInClient.signOut()
                     }
                 } else {
                     // This happens if the sign-in with Firebase fails for other reasons.
-                    Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show()
-                }
+                    // Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show()
+                }3
             }
     }
 
     // This function will be used to move to the next screen after a successful login.
     // I'll build the DashboardActivity later. For now, it just shows a message.
     private fun navigateToDashboard() {
-        Toast.makeText(this, "Logged in! Navigating to Dashboard...", Toast.LENGTH_LONG).show()
+        // Toast.makeText(this, "Logged in! Navigating to Dashboard...", Toast.LENGTH_LONG).show()
         // val intent = Intent(this, DashboardActivity::class.java)
         // startActivity(intent)
         // finish() // I'll use finish() later so the user can't press 'back' to get to the login screen.
