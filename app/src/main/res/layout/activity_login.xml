@@ -7,11 +7,4 @@
     android:background="#0D47A1"
     tools:context=".LoginActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="25dp"
-        android:layout_height="9dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="118dp"
-        tools:layout_editor_absoluteY="256dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

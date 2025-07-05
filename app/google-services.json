@@ -7,22 +7,22 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:419808596245:android:dffaa08005780709b8191c",
+        "mobilesdk_app_id": "1:419808596245:android:83b743b3d479eb96b8191c",
         "android_client_info": {
-          "package_name": "nz.school.mrgs.lostfound"
+          "package_name": "nz.school.mrgs.lostandfound"
         }
       },
       "oauth_client": [
         {
-          "client_id": "419808596245-qm0c3eediqdpvhpgempae78o4f4eut2h.apps.googleusercontent.com",
+          "client_id": "419808596245-i7jl736hfg17ke4j95s7rlgju2nfea5s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "nz.school.mrgs.lostfound",
+            "package_name": "nz.school.mrgs.lostandfound",
             "certificate_hash": "19805ccb430cd1756e2e849f28c30b31934abf22"
           }
         },
         {
-          "client_id": "419808596245-qt71l37kf14khg6pfli6ulhk1mqs4imc.apps.googleusercontent.com",
+          "client_id": "419808596245-tmibfe8npckvb4dcbu0l5bn8o2ico2b3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

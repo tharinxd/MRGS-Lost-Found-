@@ -1,20 +1,19 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services") // Firebase plugin
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "nz.school.mrgs.lostfound"
-    compileSdk = 35
+    namespace = "nz.school.mrgs.lostandfound"
+    compileSdk = 34
 
     defaultConfig {
-        applicationId = "nz.school.mrgs.lostfound"
+        applicationId = "nz.school.mrgs.lostandfound"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -27,30 +26,34 @@ android {
             )
         }
     }
-
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
-
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
+    }
+    // This part is crucial for fixing the 'ActivityLoginBinding' error
+    buildFeatures {
+        viewBinding = true
     }
 }
 
 dependencies {
-    // Firebase BoM
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.analytics.ktx)
+    // Standard Android Libraries
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    // AndroidX and UI libraries
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    // This is the Firebase Bill of Materials (BoM)
+    implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
 
-    // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    // Add the dependencies for the Firebase products you want to use
+    // These lines fix the FirebaseAuth, GoogleAuthProvider, etc. errors
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
+
+    // We will need this one later for the database
+    implementation("com.google.firebase:firebase-firestore-ktx")
 }
