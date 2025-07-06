@@ -113,7 +113,7 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     // This happens if the sign-in with Firebase fails for other reasons.
                     // Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show()
-                }3
+                }
             }
     }
 

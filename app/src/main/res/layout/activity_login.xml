@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- So this is the main layout for my login screen. It holds all the other parts. -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,14 +8,75 @@
     android:background="@android:color/white"
     tools:context=".LoginActivity">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_google_sign_in"
+    <!-- This is just the "Lost And Found" title at the top of the screen. I made the text bigger here. -->
+    <TextView
+        android:id="@+id/title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Continue with Google"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="64dp"
+        android:text="Lost And Found"
+        android:textColor="@android:color/black"
+        android:textSize="50sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Just a decorative line image I added to match my design. -->
+    <ImageView
+        android:id="@+id/decorative_lines_top"
+        android:layout_width="469dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/decorative_lines"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_text" />
+
+    <!-- And here's the second decorative line I put in. -->
+    <ImageView
+        android:id="@+id/decorative_lines_top2"
+        android:layout_width="469dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="424dp"
+        android:layout_marginEnd="32dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/decorative_lines"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_text" />
+
+    <!-- This is where I put my main app logo, the sursum one. -->
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="381dp"
+        android:layout_height="346dp"
+        android:layout_marginTop="4dp"
+        android:contentDescription="App Logo"
+        android:src="@drawable/sursum_logo"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/decorative_lines_top"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <!-- This is the official button from Google for signing in. It handles the look and feel automatically. -->
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btn_google_sign_in"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="148dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
