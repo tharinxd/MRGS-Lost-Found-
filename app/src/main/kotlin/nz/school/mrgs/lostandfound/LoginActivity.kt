@@ -117,12 +117,11 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    // This function will be used to move to the next screen after a successful login.
-    // I'll build the DashboardActivity later. For now, it just shows a message.
+    // This function now opens the new DashboardActivity screen.
     private fun navigateToDashboard() {
-        // Toast.makeText(this, "Logged in! Navigating to Dashboard...", Toast.LENGTH_LONG).show()
-        // val intent = Intent(this, DashboardActivity::class.java)
-        // startActivity(intent)
-        // finish() // I'll use finish() later so the user can't press 'back' to get to the login screen.
+        val intent = Intent(this, DashboardActivity::class.java)
+        startActivity(intent)
+        // I'm calling finish() here so the user can't press the 'back' button to get to the login screen.
+        finish()
     }
 }
