@@ -8,21 +8,21 @@
     app:layoutDescription="@xml/activity_dashboard_scene"
     tools:context=".DashboardActivity">
 
-    <!--
-    This is the only thing on the screen right now.
-    Its purpose is to test if the layout file is working correctly.
-    -->
+
     <ImageView
         android:id="@+id/background_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
+        android:scaleType="matrix"
         android:src="@drawable/background_image"
+        android:translationX="0dp"
+        android:translationY="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
