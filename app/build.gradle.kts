@@ -56,4 +56,5 @@ dependencies {
 
     // We will need this one later for the database
     implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("androidx.gridlayout:gridlayout:1.0.0")
 }
