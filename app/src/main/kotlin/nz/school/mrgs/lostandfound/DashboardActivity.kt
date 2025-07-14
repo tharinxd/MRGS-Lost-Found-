@@ -1,13 +1,32 @@
 package nz.school.mrgs.lostandfound
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import nz.school.mrgs.lostandfound.databinding.ActivityDashboardBinding
 
-// This is the class for my new Dashboard screen.
-// For now, its only job is to show the 'activity_dashboard.xml' layout.
 class DashboardActivity : AppCompatActivity() {
+
+    // So I'm setting up my variables here.
+    // 'binding' connects to my XML layout.
+    private lateinit var binding: ActivityDashboardBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // This function sets up what happens when the button is clicked.
+        setupClickListeners()
+    }
+
+    private fun setupClickListeners() {
+        // This is the only button listener in the code now.
+        binding.cardSetting.setOnClickListener {
+            // This line will still have an error because we haven't created SettingsActivity yet.
+            // That's our next step.
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

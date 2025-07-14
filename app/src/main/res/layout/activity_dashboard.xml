@@ -228,7 +228,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginBottom="8dp"
-                    android:src="@drawable/Logout"
+                    android:src="@drawable/logout"
                     app:tint="@android:color/black" />
 
                 <TextView
