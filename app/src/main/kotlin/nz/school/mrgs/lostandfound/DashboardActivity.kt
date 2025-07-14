@@ -22,9 +22,7 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun setupClickListeners() {
         // This is the only button listener in the code now.
-        binding.cardSetting.setOnClickListener {
-            // This line will still have an error because we haven't created SettingsActivity yet.
-            // That's our next step.
+        binding.cardSettings.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
