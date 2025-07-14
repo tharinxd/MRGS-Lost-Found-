@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MyLostItemsActivity">
+
+    <!-- I'm using a Toolbar here to have a nice title and back button at the top. -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="My Lost Items"
+        app:navigationIcon="@drawable/ic_arrow_back" />
+    <!-- You'll need to add a back arrow icon to your drawable folder for this to show up. -->
+
+    <!--
+    This is a RecyclerView. It's the standard, efficient way to show a list of items
+    that can be scrolled through. I'll load the items this user has reported into this list later.
+    -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_my_lost_items"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_lost_layout" />
+    <!-- The tools:listitem part is just for the preview, it won't affect the running app. -->
+
+</LinearLayout>

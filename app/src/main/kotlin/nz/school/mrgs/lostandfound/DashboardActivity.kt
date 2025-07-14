@@ -2,7 +2,6 @@ package nz.school.mrgs.lostandfound
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -29,23 +28,27 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
-        // For now, most buttons will just show a simple message saying they were clicked.
-        // I'll build these other pages later.
+        // I'm assuming the names for the new pages I'll create.
+        // This code will have errors until I create the actual Activity files.
 
         binding.cardLostItems.setOnClickListener {
-            Toast.makeText(this, "Lost Items clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, LostItemsActivity::class.java)
+            startActivity(intent)
         }
 
         binding.cardFoundItems.setOnClickListener {
-            Toast.makeText(this, "Found Items clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, FoundItemsActivity::class.java)
+            startActivity(intent)
         }
 
         binding.cardMyLostItems.setOnClickListener {
-            Toast.makeText(this, "My Lost Items clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MyLostItemsActivity::class.java)
+            startActivity(intent)
         }
 
         binding.cardReportItem.setOnClickListener {
-            Toast.makeText(this, "Report An Item clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ReportItemActivity::class.java)
+            startActivity(intent)
         }
 
         binding.cardSettings.setOnClickListener {
