@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- I've changed this from MotionLayout to a regular ConstraintLayout to fix the button visibility issue. -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0D47A1"
-    app:layoutDescription="@xml/activity_dashboard_scene"
     tools:context=".DashboardActivity">
 
 
@@ -24,5 +24,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+    <!--
+    This is the card for the Settings button.
+    I've constrained it to the center of the screen.
+    -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_settings"
+        style="@style/DashboardCardStyle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.26"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.702">
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+        <LinearLayout style="@style/DashboardCardContentStyle">
+
+            <ImageView
+                style="@style/DashboardCardIconStyle"
+                android:src="@drawable/ic_settings" />
+
+            <TextView
+                style="@style/DashboardCardTextStyle"
+                android:text="Settings" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
