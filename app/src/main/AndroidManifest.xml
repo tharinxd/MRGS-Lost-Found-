@@ -46,6 +46,15 @@
             android:name=".ReportItemActivity"
             android:exported="false" />
 
+
+        <activity
+            android:name=".ReportFoundItemActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ReportLostItemActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
