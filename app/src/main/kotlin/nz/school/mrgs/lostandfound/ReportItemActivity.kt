@@ -9,19 +9,21 @@ import nz.school.mrgs.lostandfound.databinding.ActivityReportitemBinding
 class ReportItemActivity : AppCompatActivity() {
 
     // 'binding' connects this code to my new XML layout.
+    // I've corrected the class name to match the 'activity_reportitem.xml' file.
     private lateinit var binding: ActivityReportitemBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // This sets up the connection to the 'activity_reportitem.xml' layout.
+        binding = ActivityReportitemBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // This function sets up what happens when each button is clicked.
         setupClickListeners()
-
-        binding = ActivityReportitemBinding.inflate(layoutInflater)
-        setContentView(binding.root)
     }
 
     private fun setupClickListeners() {
+        // I've removed the other button listeners for now to focus on the main navigation.
 
         // This is the listener for my new Dashboard button in the nav bar.
         binding.btnDashboard.setOnClickListener {
