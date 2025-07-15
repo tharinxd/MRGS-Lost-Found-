@@ -1,22 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- I've changed this to a ConstraintLayout to make it easier to place the bottom bar and button. -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
+    android:background="#053B80"
     tools:context=".ReportItemActivity">
 
-    <!--
-    So this is just a super basic layout for my "Report Item" page.
-    Right now it just has a title so I know I've opened the right screen.
-    I'll add the form fields here later.
-    -->
-    <TextView
+    <!-- This LinearLayout holds the original content and keeps it centered. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <!-- This is the white bar at the bottom of the screen. -->
+    <View
+        android:id="@+id/bottom_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- This is the new Dashboard button, centered inside the white bar. -->
+    <ImageButton
+        android:id="@+id/btn_dashboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Report Item Page"
-        android:textSize="24sp" />
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Dashboard"
+        android:padding="4dp"
+        android:src="@drawable/homebuttom"
+        app:layout_constraintBottom_toBottomOf="@id/bottom_nav_bar"
+        app:layout_constraintEnd_toEndOf="@id/bottom_nav_bar"
+        app:layout_constraintStart_toStartOf="@id/bottom_nav_bar"
+        app:layout_constraintTop_toTopOf="@id/bottom_nav_bar" />
+    <!-- TODO: You'll need to add a dashboard icon named 'ic_dashboard' to your drawable folder. -->
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
