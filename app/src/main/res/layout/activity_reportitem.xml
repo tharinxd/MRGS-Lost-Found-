@@ -14,11 +14,48 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="32dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- I'm adding a title here to guide the user. -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="What would you like to report?"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <!-- This is the button to report a lost item. -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_report_lost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@android:color/white"
+            android:padding="16dp"
+            android:text="Report a LOST Item"
+            android:textColor="#053B80"
+            android:textSize="16sp" />
+
+        <!-- And this is the button to report a found item. -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_report_found"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Report a FOUND Item"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:strokeColor="@android:color/white" />
+
+    </LinearLayout>
 
     <!-- This is the white bar at the bottom of the screen. -->
     <View
