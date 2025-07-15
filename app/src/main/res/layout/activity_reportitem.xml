@@ -24,7 +24,7 @@
     <View
         android:id="@+id/bottom_nav_bar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="50dp"
         android:background="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,16 +33,16 @@
     <!-- This is the new Dashboard button, centered inside the white bar. -->
     <ImageButton
         android:id="@+id/btn_dashboard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="Dashboard"
         android:padding="4dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/homebuttom"
         app:layout_constraintBottom_toBottomOf="@id/bottom_nav_bar"
         app:layout_constraintEnd_toEndOf="@id/bottom_nav_bar"
         app:layout_constraintStart_toStartOf="@id/bottom_nav_bar"
         app:layout_constraintTop_toTopOf="@id/bottom_nav_bar" />
-    <!-- TODO: You'll need to add a dashboard icon named 'ic_dashboard' to your drawable folder. -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
