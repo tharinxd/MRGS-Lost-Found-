@@ -1,3 +1,53 @@
 <resources>
     <string name="app_name">MRGS Lost &amp; Found™</string>
+
+
+    <string-array name="item_types_array">
+        <item>Shoes</item>
+        <item>Boots</item>
+        <item>Uniform</item>
+        <item>PE Gear</item>
+        <item>Sports Clothing</item>
+        <item>Bottle</item>
+        <item>Lunchbox</item>
+        <item>Books</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="item_locations_array">
+        <item>Gym 1</item>
+        <item>Gym 2</item>
+        <item>Gym 3</item>
+        <item>Library</item>
+        <item>Field</item>
+        <item>Hall</item>
+    </string-array>
+
+    <string-array name="item_sizes_array">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+    </string-array>
+
+    <string-array name="item_periods_array">
+        <item>Before School</item>
+        <item>Period 1</item>
+        <item>Period 2</item>
+        <item>Lunch</item>
+        <item>Period 3</item>
+        <item>Period 4</item>
+        <item>After School</item>
+    </string-array>
+
+    <string-array name="item_colors_array">
+        <item>Black</item>
+        <item>White</item>
+        <item>Blue</item>
+        <item>Red</item>
+        <item>Green</item>
+        <item>Leather Black</item>
+    </string-array>
 </resources>

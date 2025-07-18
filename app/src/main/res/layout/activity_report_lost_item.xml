@@ -4,19 +4,114 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:background="#0D47A1"
     android:orientation="vertical"
-    tools:context=".ReportLostItemActivity">
+    tools:context=".ReportLostFormActivity">
 
-    <!--
-    So this is just a super basic layout for my "Report a Lost Item" page.
-    Right now it just has a title so I know I've opened the right screen.
-    I'll add the form fields for reporting an item here later.
-    -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Report a Lost Item Page"
-        android:textSize="24sp" />
+    <!-- I'm using a Toolbar here to have a nice title and back button at the top. -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/white"
+        app:title="Report Lost Item"
+        app:titleTextColor="@color/white" />
+
+    <!-- A ScrollView is important for forms so that if the keyboard pops up, -->
+    <!-- the user can still scroll down to see all the fields. -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- I'm using TextInputLayout because it gives a nice floating label effect. -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Item Title"
+                android:textColorHint="@color/white"
+                app:boxStrokeColor="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_item_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- This GridLayout holds the dropdown menus in a 2x3 grid. -->
+            <androidx.gridlayout.widget.GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:columnCount="2">
+
+                <!-- I've applied the styles directly to each view to fix the build error. -->
+                <TextView android:text="Item Type" android:layout_width="0dp" android:layout_height="wrap_content" app:layout_columnWeight="1" android:textColor="@color/white" android:layout_marginStart="8dp" android:layout_marginTop="16dp" />
+                <TextView android:text="Location Lost" android:layout_width="0dp" android:layout_height="wrap_content" app:layout_columnWeight="1" android:textColor="@color/white" android:layout_marginStart="8dp" android:layout_marginTop="16dp" />
+                <Spinner android:id="@+id/spinner_item_type" android:layout_width="0dp" android:layout_height="48dp" app:layout_columnWeight="1" android:layout_margin="4dp" android:background="@drawable/spinner_background" android:entries="@array/item_types_array" />
+                <Spinner android:id="@+id/spinner_location" android:layout_width="0dp" android:layout_height="48dp" app:layout_columnWeight="1" android:layout_margin="4dp" android:background="@drawable/spinner_background" android:entries="@array/item_locations_array" />
+
+                <TextView android:text="Size" android:layout_width="0dp" android:layout_height="wrap_content" app:layout_columnWeight="1" android:textColor="@color/white" android:layout_marginStart="8dp" android:layout_marginTop="16dp" />
+                <TextView android:text="Period Lost" android:layout_width="0dp" android:layout_height="wrap_content" app:layout_columnWeight="1" android:textColor="@color/white" android:layout_marginStart="8dp" android:layout_marginTop="16dp" />
+                <Spinner android:id="@+id/spinner_size" android:layout_width="0dp" android:layout_height="48dp" app:layout_columnWeight="1" android:layout_margin="4dp" android:background="@drawable/spinner_background" android:entries="@array/item_sizes_array" />
+                <Spinner android:id="@+id/spinner_period" android:layout_width="0dp" android:layout_height="48dp" app:layout_columnWeight="1" android:layout_margin="4dp" android:background="@drawable/spinner_background" android:entries="@array/item_periods_array" />
+
+                <TextView android:text="Colour" android:layout_width="0dp" android:layout_height="wrap_content" app:layout_columnWeight="1" android:textColor="@color/white" android:layout_marginStart="8dp" android:layout_marginTop="16dp" />
+                <TextView android:text="Date Lost" android:layout_width="0dp" android:layout_height="wrap_content" app:layout_columnWeight="1" android:textColor="@color/white" android:layout_marginStart="8dp" android:layout_marginTop="16dp" />
+                <Spinner android:id="@+id/spinner_color" android:layout_width="0dp" android:layout_height="48dp" app:layout_columnWeight="1" android:layout_margin="4dp" android:background="@drawable/spinner_background" android:entries="@array/item_colors_array" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_date_lost"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    app:layout_columnWeight="1"
+                    android:layout_margin="4dp"
+                    android:backgroundTint="@android:color/white"
+                    android:text="Select Date"
+                    app:icon="@drawable/ic_calendar"
+                    app:iconGravity="start"
+                    app:iconTint="@android:color/black" />
+
+            </androidx.gridlayout.widget.GridLayout>
+
+            <!-- This is a multi-line text box for any extra notes. -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Notes"
+                android:textColorHint="@color/white"
+                app:boxStrokeColor="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:lines="4"
+                    android:textColor="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- This is the final submit button for the form. -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/white"
+                android:text="Submit"
+                android:textColor="#0D47A1" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

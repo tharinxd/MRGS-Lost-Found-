@@ -59,4 +59,5 @@ dependencies {
     implementation("androidx.gridlayout:gridlayout:1.0.0")
     // This is for loading images from the internet, like the user's profile picture.
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
 }
