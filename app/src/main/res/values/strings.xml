@@ -1,44 +1,146 @@
 <resources>
     <string name="app_name">MRGS Lost &amp; Found™</string>
 
-
+    <!-- The list of item types a user can select -->
     <string-array name="item_types_array">
+        <!-- Clothing -->
         <item>Shoes</item>
         <item>Boots</item>
         <item>Uniform</item>
         <item>PE Gear</item>
         <item>Sports Clothing</item>
-        <item>Bottle</item>
+        <item>Jacket / Hoodie</item>
+        <item>Hat / Cap</item>
+        <item>Scarf / Gloves</item>
+        <item>Socks</item>
+        <item>Tie</item>
+
+        <!-- Bags -->
+        <item>Backpack</item>
+        <item>Pencil Case</item>
         <item>Lunchbox</item>
+        <item>Tote Bag</item>
+        <item>Laptop Bag</item>
+
+        <!-- Electronics -->
+        <item>Phone</item>
+        <item>Earbuds / Headphones</item>
+        <item>Charger / Power Bank</item>
+        <item>USB Drive</item>
+        <item>Tablet / Laptop</item>
+        <item>Smartwatch</item>
+
+        <!-- Stationery & Academic -->
         <item>Books</item>
+        <item>Notebook / Folder</item>
+        <item>Textbooks</item>
+        <item>Calculator</item>
+        <item>Ruler / Geometry Set</item>
+        <item>Art Supplies</item>
+
+        <!-- Personal / Miscellaneous -->
+        <item>Bottle</item>
+        <item>ID Card / Bus Pass</item>
+        <item>Glasses / Sunglasses</item>
+        <item>Keys</item>
+        <item>Musical Instrument</item>
+        <item>Sports Equipment</item>
+        <item>Personal Item / Keepsake</item>
+
+        <!-- Fallback -->
         <item>Other</item>
     </string-array>
 
-    <string-array name="item_locations_array">
-        <item>Gym 1</item>
-        <item>Gym 2</item>
-        <item>Gym 3</item>
-        <item>Library</item>
-        <item>Field</item>
-        <item>Hall</item>
+    <!-- SIZES: These are now broken into categories -->
+
+    <!-- Clothing sizes for items like Uniform, PE Gear, etc. -->
+    <string-array name="clothing_sizes_array">
+        <item>XXS</item>
+        <item>XS</item>
+        <item>S</item>
+        <item>M</item>
+        <item>L</item>
+        <item>XL</item>
+        <item>XXL</item>
     </string-array>
 
-    <string-array name="item_sizes_array">
-        <item>Small</item>
-        <item>Medium</item>
-        <item>Large</item>
+    <!-- Shoe sizes (numerical) for Shoes and Boots -->
+    <string-array name="shoe_sizes_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
         <item>9</item>
         <item>10</item>
         <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
     </string-array>
+
+    <!-- A general size array for items that don't fit other categories -->
+    <string-array name="general_sizes_array">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+        <item>N/A</item>
+    </string-array>
+
+    <!-- Other item details -->
+
+    <string-array name="item_locations_array">
+        <!-- Academic Blocks -->
+        <item>A Block</item>
+        <item>B Block</item>
+        <item>C Block</item>
+        <item>D Block</item>
+        <item>E Block</item>
+        <item>G Block</item>
+        <item>H Block</item>
+        <item>L Block</item>
+        <item>M Block</item>
+        <item>P Block</item>
+        <item>R Block</item>
+        <item>S Block</item>
+        <item>T Block</item>
+
+        <!-- Fields & Outdoor Areas -->
+        <item>Back Field</item>
+        <item>Front Field</item>
+        <item>Front Turf</item>
+        <item>Hockey Turf</item>
+        <item>Quad</item>
+
+        <!-- Facilities & Common Areas -->
+        <item>Butlers Hall</item>
+        <item>Gym 1</item>
+        <item>Gym 2</item>
+        <item>Gym 3</item>
+        <item>Learning Hub</item>
+        <item>Marae</item>
+        <item>Macleans Centre</item>
+        <item>Office</item>
+        <item>Swimming Pool</item>
+        <item>Toilets</item>
+        <item>Year 13 Common Room</item>
+    </string-array>
+
 
     <string-array name="item_periods_array">
         <item>Before School</item>
         <item>Period 1</item>
         <item>Period 2</item>
-        <item>Lunch</item>
+        <item>Hui Ako</item>
+        <item>Morning Tea</item>
         <item>Period 3</item>
         <item>Period 4</item>
+        <item>Lunch</item>
+        <item>Period 5</item>
         <item>After School</item>
     </string-array>
 
@@ -48,6 +150,25 @@
         <item>Blue</item>
         <item>Red</item>
         <item>Green</item>
+        <item>Yellow</item>
+        <item>Orange</item>
+        <item>Purple</item>
+        <item>Pink</item>
+        <item>Brown</item>
+        <item>Grey</item>
+        <item>Beige</item>
+        <item>Navy Blue</item>
+        <item>Light Blue</item>
+        <item>Dark Green</item>
+        <item>Maroon</item>
+        <item>Teal</item>
+        <item>Turquoise</item>
+        <item>Gold</item>
+        <item>Silver</item>
+        <item>Transparent</item>
+        <item>Multicolored</item>
         <item>Leather Black</item>
+        <item>Other</item>
     </string-array>
+
 </resources>
