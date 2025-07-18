@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#0D47A1"
     android:orientation="vertical"
-    tools:context=".ReportLostFormActivity">
+    tools:context=".ReportLostItemActivity">
 
     <!-- I'm using a Toolbar here to have a nice title and back button at the top. -->
     <com.google.android.material.appbar.MaterialToolbar
