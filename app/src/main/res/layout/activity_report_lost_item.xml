@@ -61,7 +61,12 @@
 
                 <TextView android:text="Size" android:layout_width="0dp" android:layout_height="wrap_content" app:layout_columnWeight="1" android:textColor="@color/white" android:layout_marginStart="8dp" android:layout_marginTop="16dp" />
                 <TextView android:text="Period Lost" android:layout_width="0dp" android:layout_height="wrap_content" app:layout_columnWeight="1" android:textColor="@color/white" android:layout_marginStart="8dp" android:layout_marginTop="16dp" />
-                <Spinner android:id="@+id/spinner_size" android:layout_width="0dp" android:layout_height="48dp" app:layout_columnWeight="1" android:layout_margin="4dp" android:background="@drawable/spinner_background" android:entries="@array/item_sizes_array" />
+
+                <!-- **** THE CHANGE IS HERE **** -->
+                <!-- The android:entries attribute has been removed from the spinner below. -->
+                <!-- Its content will be set dynamically from the Kotlin code. -->
+                <Spinner android:id="@+id/spinner_size" android:layout_width="0dp" android:layout_height="48dp" app:layout_columnWeight="1" android:layout_margin="4dp" android:background="@drawable/spinner_background" />
+
                 <Spinner android:id="@+id/spinner_period" android:layout_width="0dp" android:layout_height="48dp" app:layout_columnWeight="1" android:layout_margin="4dp" android:background="@drawable/spinner_background" android:entries="@array/item_periods_array" />
 
                 <TextView android:text="Colour" android:layout_width="0dp" android:layout_height="wrap_content" app:layout_columnWeight="1" android:textColor="@color/white" android:layout_marginStart="8dp" android:layout_marginTop="16dp" />
