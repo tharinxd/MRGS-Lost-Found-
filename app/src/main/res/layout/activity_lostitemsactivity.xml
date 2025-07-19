@@ -4,29 +4,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+     android:background="#0D47A1"
     android:orientation="vertical"
     tools:context=".LostItemsActivity">
 
-    <!-- I'm using a Toolbar here to have a nice title and back button at the top. -->
+    <!-- I'm using a Toolbar here for the title and back button. -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/white"
         app:title="Lost Items"
-        app:navigationIcon="@drawable/ic_arrow_back" />
-    <!-- You'll need to add a back arrow icon to your drawable folder for this to show up. -->
+        app:titleTextColor="@color/white" />
+
+    <!-- This is the search bar at the top of the page. -->
+    <SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/spinner_background"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search..." />
+
+    <!-- This holds my two filter dropdowns side-by-side. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <Spinner
+            android:id="@+id/spinner_category"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/spinner_background"
+            android:entries="@array/item_types_array" />
+
+        <Spinner
+            android:id="@+id/spinner_color"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/spinner_background"
+            android:entries="@array/item_colors_array" />
+    </LinearLayout>
 
     <!--
-    This is a RecyclerView. It's the standard, efficient way to show a list of items
-    that can be scrolled through. I'll load the found items from my database into this later.
+    This is a RecyclerView. It's what I'll use to show the grid of lost items.
+    I've set the spanCount to 2 to make it a two-column grid.
     -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_found_items"
+        android:id="@+id/recycler_view_lost_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_found_layout" />
-    <!-- The tools:listitem part is just for the preview, it won't affect the running app. -->
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:listitem="@layout/item_card_layout" />
 
 </LinearLayout>

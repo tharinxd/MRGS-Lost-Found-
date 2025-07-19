@@ -1,13 +1,16 @@
 package nz.school.mrgs.lostandfound
 
-import nz.school.mrgs.lostandfound.data.Item
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import nz.school.mrgs.lostandfound.data.Item
 import nz.school.mrgs.lostandfound.databinding.ActivityReportLostItemBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -33,6 +36,41 @@ class ReportLostItemActivity : AppCompatActivity() {
 
         // This sets up the click listeners for my two main buttons.
         setupClickListeners()
+
+        // This new function sets up the logic for my dynamic dropdowns.
+        setupItemTypeSpinnerListener()
+    }
+
+    // This is the new function. It listens for changes in the "Item Type" dropdown.
+    private fun setupItemTypeSpinnerListener() {
+        binding.spinnerItemType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                // I get the item that the user selected, for example, "Shoes".
+                val selectedType = parent.getItemAtPosition(position).toString()
+
+                // I figure out which list of sizes to show based on the selected item type.
+                val sizeArrayResourceId = when (selectedType) {
+                    "Shoes", "Boots" -> R.array.shoe_sizes_array
+                    "Uniform", "PE Gear", "Sports Clothing", "Jacket / Hoodie" -> R.array.clothing_sizes_array
+                    else -> R.array.general_sizes_array
+                }
+
+                // I create a new adapter for the "Size" spinner using the correct list of sizes.
+                ArrayAdapter.createFromResource(
+                    this@ReportLostItemActivity,
+                    sizeArrayResourceId,
+                    android.R.layout.simple_spinner_item
+                ).also { adapter ->
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    // Finally, I tell the "Size" spinner to use this new adapter.
+                    binding.spinnerSize.adapter = adapter
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // I don't need to do anything here.
+            }
+        }
     }
 
     private fun setupClickListeners() {
