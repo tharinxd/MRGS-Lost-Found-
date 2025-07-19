@@ -97,7 +97,12 @@ class ReportLostItemActivity : AppCompatActivity() {
 
                 // I then format the date nicely to show it on the button.
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                binding.btnDateLost.text = dateFormat.format(selectedDate.time)
+                val formattedDate = dateFormat.format(selectedDate.time)
+
+                // I've removed the debugging Toast message from here.
+                // Toast.makeText(this, "Date selected: $formattedDate", Toast.LENGTH_SHORT).show()
+
+                binding.btnDateLost.text = formattedDate
             },
             selectedDate.get(Calendar.YEAR),
             selectedDate.get(Calendar.MONTH),
@@ -111,7 +116,7 @@ class ReportLostItemActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         // First, I check to make sure someone is actually logged in.
         if (currentUser == null) {
-            Toast.makeText(this, "You must be logged in to report an item.", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "You must be logged in to report an item.", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -141,12 +146,12 @@ class ReportLostItemActivity : AppCompatActivity() {
             .add(newItem)
             .addOnSuccessListener {
                 // If it saves successfully, I show a message and close the form.
-                Toast.makeText(this, "Item reported successfully!", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this, "Item reported successfully!", Toast.LENGTH_SHORT).show()
                 finish()
             }
             .addOnFailureListener { e ->
                 // If there's an error, I show a message with the error details.
-                Toast.makeText(this, "Error reporting item: ${e.message}", Toast.LENGTH_LONG).show()
+                // Toast.makeText(this, "Error reporting item: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }
 }
