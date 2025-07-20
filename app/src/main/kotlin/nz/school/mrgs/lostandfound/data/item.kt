@@ -9,13 +9,12 @@ import java.util.Date
 data class Item(
     val userId: String = "",
     val title: String = "",
+    val type: String = "",
     val location: String = "",
     val size: String = "",
     val period: String = "",
     val color: String = "",
     val notes: String = "",
-    // I'm using @ServerTimestamp so that Firestore automatically adds the date and time
-    // when the data is saved. This is super useful.
     @ServerTimestamp val dateLost: Date? = null,
     @ServerTimestamp val reportTimestamp: Date? = null
 )
