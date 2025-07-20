@@ -4,19 +4,220 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:background="#0D47A1"
     android:orientation="vertical"
-    tools:context=".ReportFoundItemActivityy">
+    tools:context=".ReportFoundItemActivity">
 
-    <!--
-    So this is just a super basic layout for my "Report a Found Item" page.
-    Right now it just has a title so I know I've opened the right screen.
-    I'll add the form fields for reporting an item here later.
-    -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Report a Found Item Page"
-        android:textSize="24sp" />
+    <!-- I'm using a Toolbar here to have a nice title and back button at the top. -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/white"
+        app:title="Report Found Item"
+        app:titleTextColor="@color/white" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- I'm using a ConstraintLayout here to get the more complex layout from my design. -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <!-- This is the ImageView where the user can upload a picture of the found item. -->
+            <ImageView
+                android:id="@+id/item_image_preview"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/spinner_background"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <!-- This button will let the user upload an image. -->
+            <ImageButton
+                android:id="@+id/btn_upload_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/camera"
+                app:layout_constraintBottom_toBottomOf="@id/item_image_preview"
+                app:layout_constraintEnd_toEndOf="@id/item_image_preview"
+                app:tint="@android:color/black" />
+
+            <!-- These are the dropdowns next to the image. -->
+            <TextView
+                android:id="@+id/label_item_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Item Type"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/item_image_preview"
+                app:layout_constraintTop_toTopOf="@id/item_image_preview" />
+
+            <Spinner
+                android:id="@+id/spinner_item_type"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/spinner_background"
+                android:entries="@array/item_types_array"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/item_image_preview"
+                app:layout_constraintTop_toBottomOf="@id/label_item_type" />
+
+            <TextView
+                android:id="@+id/label_size"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Size"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@id/spinner_item_type"
+                app:layout_constraintStart_toStartOf="@id/spinner_item_type"
+                app:layout_constraintTop_toBottomOf="@id/spinner_item_type" />
+
+            <Spinner
+                android:id="@+id/spinner_size"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:background="@drawable/spinner_background"
+                android:entries="@array/general_sizes_array"
+                app:layout_constraintEnd_toEndOf="@id/spinner_item_type"
+                app:layout_constraintStart_toStartOf="@id/spinner_item_type"
+                app:layout_constraintTop_toBottomOf="@id/label_size" />
+
+            <TextView
+                android:id="@+id/label_color"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Colour"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@id/spinner_size"
+                app:layout_constraintStart_toStartOf="@id/spinner_size"
+                app:layout_constraintTop_toBottomOf="@id/spinner_size" />
+
+            <Spinner
+                android:id="@+id/spinner_color"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:background="@drawable/spinner_background"
+                android:entries="@array/item_colors_array"
+                app:layout_constraintEnd_toEndOf="@id/spinner_size"
+                app:layout_constraintStart_toStartOf="@id/spinner_size"
+                app:layout_constraintTop_toBottomOf="@id/label_color" />
+
+            <!-- This is the "Item Title" input field, placed below the image section. -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_item_title"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:hint="Item Title"
+                android:textColorHint="@color/white"
+                app:boxStrokeColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/item_image_preview">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_item_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- This GridLayout holds the rest of the form fields. -->
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/grid_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:columnCount="2"
+                app:layout_constraintTop_toBottomOf="@id/layout_item_title">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Location Found"
+                    android:textColor="@color/white"
+                    app:layout_columnWeight="1" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Period Found"
+                    android:textColor="@color/white"
+                    app:layout_columnWeight="1" />
+
+                <Spinner
+                    android:id="@+id/spinner_location"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/spinner_background"
+                    android:entries="@array/item_locations_array"
+                    app:layout_columnWeight="1" />
+
+                <Spinner
+                    android:id="@+id/spinner_period"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/spinner_background"
+                    android:entries="@array/item_periods_array"
+                    app:layout_columnWeight="1" />
+
+            </androidx.gridlayout.widget.GridLayout>
+
+            <!-- This is the multi-line text box for notes. -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_notes"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Notes"
+                android:textColorHint="@color/white"
+                app:boxStrokeColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/grid_details">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:lines="4"
+                    android:textColor="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- This is the final submit button for the form. -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/white"
+                android:text="Submit"
+                android:textColor="#0D47A1"
+                app:layout_constraintTop_toBottomOf="@id/layout_notes" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </LinearLayout>

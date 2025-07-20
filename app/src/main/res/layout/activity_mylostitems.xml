@@ -4,29 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0D47A1"
     android:orientation="vertical"
     tools:context=".MyLostItemsActivity">
 
-    <!-- I'm using a Toolbar here to have a nice title and back button at the top. -->
+    <!-- I'm using a Toolbar here for the title and back button. -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/white"
         app:title="My Lost Items"
-        app:navigationIcon="@drawable/ic_arrow_back" />
-    <!-- You'll need to add a back arrow icon to your drawable folder for this to show up. -->
+        app:titleTextColor="@color/white" />
 
     <!--
-    This is a RecyclerView. It's the standard, efficient way to show a list of items
-    that can be scrolled through. I'll load the items this user has reported into this list later.
+    This is the RecyclerView that will show the grid of items
+    reported by the current user.
     -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_my_lost_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_lost_layout" />
-    <!-- The tools:listitem part is just for the preview, it won't affect the running app. -->
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:listitem="@layout/item_card_layout" />
 
 </LinearLayout>
