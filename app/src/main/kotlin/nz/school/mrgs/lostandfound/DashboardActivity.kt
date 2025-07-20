@@ -2,6 +2,7 @@ package nz.school.mrgs.lostandfound
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -58,17 +59,21 @@ class DashboardActivity : AppCompatActivity() {
 
         // This is the click listener for the logout button.
         binding.cardLogout.setOnClickListener {
-            // This line signs the user out of their Firebase account.
-            auth.signOut()
-
-            // This creates the instruction to go back to the LoginActivity.
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-
-            // I call finish() here to close the dashboard screen completely.
-            // This is important so the user can't press the 'back' button to get
-            // back into the app after they've logged out.
-            finish()
+            // So, based on feedback, I'm adding a confirmation pop-up here.
+            // This creates a standard Android alert dialog.
+            AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to log out?")
+                // The "Yes" button will contain the original logout code.
+                .setPositiveButton("Yes") { dialog, which ->
+                    auth.signOut()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                // The "No" button doesn't need to do anything, it just closes the pop-up.
+                .setNegativeButton("No", null)
+                .show()
         }
     }
 }
