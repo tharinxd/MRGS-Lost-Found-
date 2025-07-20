@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardBackgroundColor="#3F51B5"
+    app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="16dp"
     app:contentPadding="16dp">
 
@@ -20,7 +20,7 @@
             android:id="@+id/item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             tools:text="adidas 720" />
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textColor="#B0BEC5"
+            android:textColor="@android:color/darker_gray"
             android:textSize="12sp"
             tools:text="01/04/2025" />
 
