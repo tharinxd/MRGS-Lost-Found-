@@ -117,7 +117,15 @@
                 app:layout_constraintStart_toStartOf="@id/spinner_size"
                 app:layout_constraintTop_toBottomOf="@id/label_color" />
 
-            <!-- This is the "Item Title" input field, placed below the image section. -->
+            <!-- THE FIX IS HERE: This is an invisible barrier that sits below both the image and the spinners. -->
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/top_section_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="item_image_preview,spinner_color" />
+
+            <!-- This is the "Item Title" input field, now constrained to the barrier. -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_item_title"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -127,7 +135,7 @@
                 android:hint="Item Title"
                 android:textColorHint="@color/white"
                 app:boxStrokeColor="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/item_image_preview">
+                app:layout_constraintTop_toBottomOf="@id/top_section_barrier">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_item_title"
@@ -181,20 +189,47 @@
                     android:entries="@array/item_periods_array"
                     app:layout_columnWeight="1" />
 
+                <!-- I've added the "Date Found" label and button here. -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Date Found"
+                    android:textColor="@color/white"
+                    app:layout_columnWeight="1" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_columnWeight="1" /> <!-- This is an empty spacer -->
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_date_found"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="4dp"
+                    android:backgroundTint="@android:color/white"
+                    android:text="Select Date"
+                    android:textColor="@android:color/black"
+                    app:icon="@drawable/ic_calendar"
+                    app:iconGravity="start"
+                    app:iconTint="@android:color/black"
+                    app:layout_columnSpan="2"
+                    app:layout_columnWeight="1" />
+
             </androidx.gridlayout.widget.GridLayout>
 
             <!-- This is the multi-line text box for notes. -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_notes"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Notes"
                 android:textColorHint="@color/white"
                 app:boxStrokeColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/grid_details">
 
                 <com.google.android.material.textfield.TextInputEditText

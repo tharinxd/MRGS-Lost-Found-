@@ -1,5 +1,6 @@
 package nz.school.mrgs.lostandfound
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -11,7 +12,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import nz.school.mrgs.lostandfound.data.Item
 import nz.school.mrgs.lostandfound.databinding.ActivityReportFoundItemBinding
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 // So this is the Kotlin file for my "Report a FOUND Item" form page.
 class ReportFoundItemActivity : AppCompatActivity() {
@@ -21,6 +24,7 @@ class ReportFoundItemActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReportFoundItemBinding
     private val db = Firebase.firestore
     private val auth = Firebase.auth
+    private var selectedDate: Calendar = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +85,32 @@ class ReportFoundItemActivity : AppCompatActivity() {
             // TODO: I'll add the code here later to open the phone's gallery to pick an image.
             Toast.makeText(this, "Image upload not implemented yet.", Toast.LENGTH_SHORT).show()
         }
+
+        // This is for the "Date Found" button.
+        binding.btnDateFound.setOnClickListener {
+            showDatePicker()
+        }
+    }
+
+    // This function's job is to show the calendar pop-up.
+    private fun showDatePicker() {
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, year, month, dayOfMonth ->
+                // When the user picks a date, I save it in my 'selectedDate' variable.
+                selectedDate.set(Calendar.YEAR, year)
+                selectedDate.set(Calendar.MONTH, month)
+                selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+                // I then format the date nicely to show it on the button.
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                binding.btnDateFound.text = dateFormat.format(selectedDate.time)
+            },
+            selectedDate.get(Calendar.YEAR),
+            selectedDate.get(Calendar.MONTH),
+            selectedDate.get(Calendar.DAY_OF_MONTH)
+        )
+        datePickerDialog.show()
     }
 
     // This is the main function that runs when the user hits "Submit".
@@ -110,8 +140,7 @@ class ReportFoundItemActivity : AppCompatActivity() {
             period = binding.spinnerPeriod.selectedItem.toString(),
             color = binding.spinnerColor.selectedItem.toString(),
             notes = binding.etNotes.text.toString().trim(),
-            // For a found item, the date is when it was found. I'm just using the current time for now.
-            dateLost = Calendar.getInstance().time
+            dateLost = selectedDate.time // For a found item, this represents the date it was found.
         )
 
         // Finally, I save this 'newItem' object to my Firestore database.
