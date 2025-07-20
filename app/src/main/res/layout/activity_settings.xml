@@ -25,4 +25,5 @@
         android:text="Settings Page Content Goes Here"
         android:textSize="18sp" />
 
+
 </LinearLayout>

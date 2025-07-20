@@ -46,9 +46,10 @@ class ReportFoundItemActivity : AppCompatActivity() {
             finish()
         }
 
-        // ✅ Ask for runtime image permission on Android 13+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestPermissions(arrayOf(Manifest.permission.READ_MEDIA_IMAGES), 1001)
+        } else {
+            requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1002)
         }
 
         setupClickListeners()
@@ -111,49 +112,52 @@ class ReportFoundItemActivity : AppCompatActivity() {
 
     private fun submitReport() {
         val title = binding.etItemTitle.text.toString().trim()
+        val currentUser = auth.currentUser
+
+        if (currentUser == null) {
+            Toast.makeText(this, "You must be logged in to report an item.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         if (title.isEmpty()) {
             binding.etItemTitle.error = "Title cannot be empty"
             return
         }
 
-        if (imageUri == null) {
-            Toast.makeText(this, "Please select an image for the item.", Toast.LENGTH_SHORT).show()
-            return
+        if (imageUri != null) {
+            Log.d("UPLOAD", "Uploading from URI: $imageUri")
+            Toast.makeText(this, "Uploading image...", Toast.LENGTH_SHORT).show()
+
+            val filename = UUID.randomUUID().toString()
+            val storageRef = storage.reference.child("found_items/$filename")
+
+            storageRef.putFile(imageUri!!)
+                .addOnSuccessListener {
+                    storageRef.downloadUrl
+                        .addOnSuccessListener { uri ->
+                            val imageUrl = uri.toString()
+                            saveItemToFirestore(imageUrl)
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("UPLOAD_FAILURE", "Failed to get image URL.", e)
+                            Toast.makeText(this, "Proceeding without image URL.", Toast.LENGTH_SHORT).show()
+                            saveItemToFirestore(null)
+                        }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("UPLOAD_FAILURE", "Image upload failed.", e)
+                    Toast.makeText(this, "Image upload failed. Proceeding without image.", Toast.LENGTH_SHORT).show()
+                    saveItemToFirestore(null)
+                }
+        } else {
+            // No image selected, continue
+            saveItemToFirestore(null)
         }
-
-        Log.d("UPLOAD", "Uploading from URI: $imageUri")
-        Toast.makeText(this, "Uploading image...", Toast.LENGTH_SHORT).show()
-
-        val filename = UUID.randomUUID().toString()
-        val storageRef = storage.reference.child("found_items/$filename")
-
-        storageRef.putFile(imageUri!!)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Image uploaded. Getting URL...", Toast.LENGTH_SHORT).show()
-                storageRef.downloadUrl
-                    .addOnSuccessListener { uri ->
-                        val imageUrl = uri.toString()
-                        Toast.makeText(this, "Got image URL", Toast.LENGTH_SHORT).show()
-                        saveItemToFirestore(imageUrl)
-                    }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(this, "Failed to get image URL: ${e.message}", Toast.LENGTH_SHORT).show()
-                    }
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Image upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
     }
 
-    private fun saveItemToFirestore(imageUrl: String) {
-        val currentUser = auth.currentUser
-        if (currentUser == null) {
-            Toast.makeText(this, "You must be logged in.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
+    private fun saveItemToFirestore(imageUrl: String?) {
         val newItem = Item(
-            userId = currentUser.uid,
+            userId = auth.currentUser!!.uid,
             title = binding.etItemTitle.text.toString().trim(),
             type = binding.spinnerItemType.selectedItem.toString(),
             location = binding.spinnerLocation.selectedItem.toString(),
@@ -161,7 +165,7 @@ class ReportFoundItemActivity : AppCompatActivity() {
             period = binding.spinnerPeriod.selectedItem.toString(),
             color = binding.spinnerColor.selectedItem.toString(),
             notes = binding.etNotes.text.toString().trim(),
-            imageUrl = imageUrl,
+            imageUrl = imageUrl ?: "", // empty string if no image
             dateLost = selectedDate.time
         )
 
@@ -172,6 +176,7 @@ class ReportFoundItemActivity : AppCompatActivity() {
                 finish()
             }
             .addOnFailureListener { e ->
+                Log.e("FIRESTORE_FAILURE", "Error reporting item.", e)
                 Toast.makeText(this, "Error reporting item: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }
