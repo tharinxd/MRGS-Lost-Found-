@@ -18,3 +18,6 @@ data class Item(
     @ServerTimestamp val dateLost: Date? = null,
     @ServerTimestamp val reportTimestamp: Date? = null
 )
+
+
+//forgot to push the commit, however i have fixed the filtering option in lost items.
