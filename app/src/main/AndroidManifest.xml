@@ -54,6 +54,10 @@
         <activity
             android:name=".ReportLostItemActivity"
             android:exported="false" />
+        <activity
+            android:name=".ItemDetailActivity"
+            android:exported="false" />
+
 
     </application>
 

@@ -1,5 +1,6 @@
 package nz.school.mrgs.lostandfound
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -14,9 +15,6 @@ import nz.school.mrgs.lostandfound.databinding.ActivityLostitemsactivityBinding
 // This is the Kotlin file for my "Lost Items" page.
 class LostItemsActivity : AppCompatActivity() {
 
-    // So I'm setting up my variables here.
-    // 'binding' connects to my XML layout, 'adapter' is what builds the list,
-    // and 'db' is my connection to the Firestore database.
     private lateinit var binding: ActivityLostitemsactivityBinding
     private lateinit var adapter: LostItemsAdapter
     private val db = Firebase.firestore
@@ -27,7 +25,7 @@ class LostItemsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // I'm connecting the binding class that was auto-generated from my 'activity_lostitemsactivity.xml' file.
+        // THE FIX IS HERE: I've corrected the binding class name to match the XML file.
         binding = ActivityLostitemsactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -41,7 +39,9 @@ class LostItemsActivity : AppCompatActivity() {
         adapter = LostItemsAdapter(listOf()) { selectedItem ->
             // For now, I'll just show a message with the item's title.
             // Later, I can change this to open a new page with the full details.
-            Toast.makeText(this, "Clicked on: ${selectedItem.title}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ItemDetailActivity::class.java)
+            intent.putExtra("EXTRA_ITEM", selectedItem)
+            startActivity(intent)
         }
         binding.recyclerViewLostItems.adapter = adapter
 
@@ -103,8 +103,8 @@ class LostItemsActivity : AppCompatActivity() {
             }
         }
 
-        // Now I filter by category. I'll need to add a 'type' field to my Item data class for this to work perfectly.
-        // For now, I'll assume the 'item_types_array' has a default "Select Type" or similar at the start.
+        // Now I filter by category, but only if they haven't selected the default "Other" or a general category.
+        // This is a simple way to have an "All" filter.
         if (binding.spinnerCategory.selectedItemPosition > 0) { // This checks if a real category is selected
             filteredList = filteredList.filter { item ->
                 item.type == selectedCategory

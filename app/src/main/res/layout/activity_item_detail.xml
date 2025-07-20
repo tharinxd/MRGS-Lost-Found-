@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D47A1"
+    android:orientation="vertical"
+    tools:context=".ItemDetailActivity">
+
+    <!-- I'm using a Toolbar here for the title and back button. -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/white"
+        app:titleTextColor="@color/white"
+        tools:title="New Balance 1500" />
+
+    <!-- This layout holds the details. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- This holds all the text details in a column. -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView style="@style/ItemDetailText" android:id="@+id/detail_size" tools:text="Size: 10" />
+            <TextView style="@style/ItemDetailText" android:id="@+id/detail_location" android:layout_marginTop="8dp" tools:text="Location Lost: B Block" />
+            <TextView style="@style/ItemDetailText" android:id="@+id/detail_period" android:layout_marginTop="8dp" tools:text="Period Lost: 4th Period" />
+            <TextView style="@style/ItemDetailText" android:id="@+id/detail_date" android:layout_marginTop="8dp" tools:text="Date: 01/04/2025" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- This is the box for the notes/description. -->
+    <TextView
+        android:id="@+id/detail_notes"
+        style="@style/ItemDetailText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="16dp"
+        tools:text="Brand new shoes with a light blue insole" />
+
+    <!-- I have removed the LinearLayout that contained the action buttons. -->
+
+</LinearLayout>

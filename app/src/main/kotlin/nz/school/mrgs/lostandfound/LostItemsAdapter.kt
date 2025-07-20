@@ -10,8 +10,7 @@ import java.util.Locale
 
 // So this is my adapter. Its job is to take my list of lost items
 // and prepare them to be displayed on the screen in the RecyclerView.
-// I've added a new parameter here, 'onItemClicked', which is a function that will be
-// called when a user taps on one of the cards.
+// The 'onItemClicked' function will be called when a user taps on the info icon.
 class LostItemsAdapter(
     private var items: List<Item>,
     private val onItemClicked: (Item) -> Unit
@@ -24,15 +23,11 @@ class LostItemsAdapter(
         return ItemViewHolder(binding)
     }
 
-    // This function takes the data for one item (like its title and date) and puts it
-    // into the TextViews of a card. It also sets up the click listener.
+    // This function takes the data for one item and puts it into the card's TextViews.
+    // It also sets up the click listener for the info button.
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val currentItem = items[position]
         holder.bind(currentItem)
-        // Here, I'm telling the card to call the 'onItemClicked' function when it's tapped.
-        holder.itemView.setOnClickListener {
-            onItemClicked(currentItem)
-        }
     }
 
     // This just tells the RecyclerView how many items are in my list.
@@ -45,7 +40,17 @@ class LostItemsAdapter(
     }
 
     // This inner class represents one single card in my list.
-    class ItemViewHolder(private val binding: ItemCardLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    // I've moved the click listener logic inside here.
+    inner class ItemViewHolder(private val binding: ItemCardLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            // This sets up the click listener on the info button itself.
+            binding.infoButton.setOnClickListener {
+                // When the button is clicked, I get the specific item for this card
+                // and call the 'onItemClicked' function that was passed in from my activity.
+                onItemClicked(items[adapterPosition])
+            }
+        }
+
         fun bind(item: Item) {
             // Here I'm setting the text for the title.
             binding.itemTitle.text = item.title
