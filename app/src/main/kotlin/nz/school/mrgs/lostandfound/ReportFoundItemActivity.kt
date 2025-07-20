@@ -1,108 +1,104 @@
 package nz.school.mrgs.lostandfound
 
+import android.Manifest
 import android.app.DatePickerDialog
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import nz.school.mrgs.lostandfound.data.Item
 import nz.school.mrgs.lostandfound.databinding.ActivityReportFoundItemBinding
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
+import java.util.*
 
-// So this is the Kotlin file for my "Report a FOUND Item" form page.
 class ReportFoundItemActivity : AppCompatActivity() {
 
-    // So I'm setting up my main variables here.
-    // 'binding' connects to my XML layout, and 'db' and 'auth' are for my Firebase connection.
     private lateinit var binding: ActivityReportFoundItemBinding
     private val db = Firebase.firestore
     private val auth = Firebase.auth
+    private val storage = Firebase.storage
     private var selectedDate: Calendar = Calendar.getInstance()
+    private var imageUri: Uri? = null
+
+    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            imageUri = it
+            binding.itemImagePreview.setImageURI(it)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReportFoundItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // This makes the back button in my toolbar work.
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
 
-        // I'm calling my functions here to set up all the button clicks and the smart dropdown menu.
+        // ✅ Ask for runtime image permission on Android 13+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(arrayOf(Manifest.permission.READ_MEDIA_IMAGES), 1001)
+        }
+
         setupClickListeners()
         setupItemTypeSpinnerListener()
     }
 
-    // This is the function I made to make the dropdowns change. It listens for when the user picks an "Item Type".
     private fun setupItemTypeSpinnerListener() {
         binding.spinnerItemType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                // I get the item that the user selected, for example, "Shoes".
                 val selectedType = parent.getItemAtPosition(position).toString()
-
-                // I use a 'when' statement here to figure out which list of sizes to show.
                 val sizeArrayResourceId = when (selectedType) {
                     "Shoes", "Boots" -> R.array.shoe_sizes_array
                     "Uniform", "PE Gear", "Sports Clothing", "Jacket / Hoodie" -> R.array.clothing_sizes_array
                     else -> R.array.general_sizes_array
                 }
-
-                // Here, I create a new list adapter for the "Size" spinner using the correct list of sizes.
                 ArrayAdapter.createFromResource(
                     this@ReportFoundItemActivity,
                     sizeArrayResourceId,
                     android.R.layout.simple_spinner_item
                 ).also { adapter ->
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    // Finally, I tell the "Size" spinner to use this new list.
                     binding.spinnerSize.adapter = adapter
                 }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // I don't need to do anything here if the user doesn't pick anything.
-            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 
-    // This function just organizes my button clicks.
     private fun setupClickListeners() {
-        // This is for the "Submit" button. When clicked, it will run my submitReport function.
         binding.btnSubmit.setOnClickListener {
             submitReport()
         }
 
-        // This is for the image upload button.
         binding.btnUploadImage.setOnClickListener {
-            // TODO: I'll add the code here later to open the phone's gallery to pick an image.
-            Toast.makeText(this, "Image upload not implemented yet.", Toast.LENGTH_SHORT).show()
+            pickImageLauncher.launch("image/*")
         }
 
-        // This is for the "Date Found" button.
         binding.btnDateFound.setOnClickListener {
             showDatePicker()
         }
     }
 
-    // This function's job is to show the calendar pop-up.
     private fun showDatePicker() {
         val datePickerDialog = DatePickerDialog(
             this,
             { _, year, month, dayOfMonth ->
-                // When the user picks a date, I save it in my 'selectedDate' variable.
                 selectedDate.set(Calendar.YEAR, year)
                 selectedDate.set(Calendar.MONTH, month)
                 selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-                // I then format the date nicely to show it on the button.
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 binding.btnDateFound.text = dateFormat.format(selectedDate.time)
             },
@@ -113,47 +109,69 @@ class ReportFoundItemActivity : AppCompatActivity() {
         datePickerDialog.show()
     }
 
-    // This is the main function that runs when the user hits "Submit".
     private fun submitReport() {
-        val currentUser = auth.currentUser
-        // First, I check to make sure someone is actually logged in.
-        if (currentUser == null) {
-            Toast.makeText(this, "You must be logged in to report an item.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // I get the text from the "Item Title" input box and make sure it's not empty.
         val title = binding.etItemTitle.text.toString().trim()
         if (title.isEmpty()) {
             binding.etItemTitle.error = "Title cannot be empty"
             return
         }
 
-        // Here, I create a new 'Item' object using the data class I made.
-        // I get all the selected values from the form's dropdowns and text boxes.
+        if (imageUri == null) {
+            Toast.makeText(this, "Please select an image for the item.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        Log.d("UPLOAD", "Uploading from URI: $imageUri")
+        Toast.makeText(this, "Uploading image...", Toast.LENGTH_SHORT).show()
+
+        val filename = UUID.randomUUID().toString()
+        val storageRef = storage.reference.child("found_items/$filename")
+
+        storageRef.putFile(imageUri!!)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Image uploaded. Getting URL...", Toast.LENGTH_SHORT).show()
+                storageRef.downloadUrl
+                    .addOnSuccessListener { uri ->
+                        val imageUrl = uri.toString()
+                        Toast.makeText(this, "Got image URL", Toast.LENGTH_SHORT).show()
+                        saveItemToFirestore(imageUrl)
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Failed to get image URL: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Image upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun saveItemToFirestore(imageUrl: String) {
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            Toast.makeText(this, "You must be logged in.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val newItem = Item(
             userId = currentUser.uid,
-            title = title,
+            title = binding.etItemTitle.text.toString().trim(),
             type = binding.spinnerItemType.selectedItem.toString(),
             location = binding.spinnerLocation.selectedItem.toString(),
             size = binding.spinnerSize.selectedItem.toString(),
             period = binding.spinnerPeriod.selectedItem.toString(),
             color = binding.spinnerColor.selectedItem.toString(),
             notes = binding.etNotes.text.toString().trim(),
-            dateLost = selectedDate.time // For a found item, this represents the date it was found.
+            imageUrl = imageUrl,
+            dateLost = selectedDate.time
         )
 
-        // Finally, I save this 'newItem' object to my Firestore database.
-        // I'm creating a new collection called "foundItems" to store all the reports for found items.
         db.collection("foundItems")
             .add(newItem)
             .addOnSuccessListener {
-                // If it saves successfully, I show a message and close the form.
                 Toast.makeText(this, "Item reported successfully!", Toast.LENGTH_SHORT).show()
                 finish()
             }
             .addOnFailureListener { e ->
-                // If there's an error, I show a message with the error details.
                 Toast.makeText(this, "Error reporting item: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }

@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".ReportFoundItemActivity">
 
-    <!-- I'm using a Toolbar here to have a nice title and back button at the top. -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -22,37 +21,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- I'm using a ConstraintLayout here to get the more complex layout from my design. -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <!-- This is the ImageView where the user can upload a picture of the found item. -->
+            <!-- Image Preview (starts empty, no placeholder) -->
             <ImageView
-                android:id="@+id/item_image_preview"
+                android:id="@+id/itemImagePreview"
                 android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_height="220dp"
                 android:background="@drawable/spinner_background"
                 android:scaleType="centerCrop"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Item Image Preview"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/backgrounds/scenic" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- This button will let the user upload an image. -->
+            <!-- Upload Button -->
             <ImageButton
-                android:id="@+id/btn_upload_image"
+                android:id="@+id/btnUploadImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/camera"
-                app:layout_constraintBottom_toBottomOf="@id/item_image_preview"
-                app:layout_constraintEnd_toEndOf="@id/item_image_preview"
+                android:contentDescription="Upload Image"
+                app:layout_constraintBottom_toBottomOf="@id/itemImagePreview"
+                app:layout_constraintEnd_toEndOf="@id/itemImagePreview"
                 app:tint="@android:color/black" />
 
-            <!-- These are the dropdowns next to the image. -->
+            <!-- Dropdowns beside image -->
             <TextView
                 android:id="@+id/label_item_type"
                 android:layout_width="0dp"
@@ -60,9 +61,9 @@
                 android:layout_marginStart="16dp"
                 android:text="Item Type"
                 android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/itemImagePreview"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/item_image_preview"
-                app:layout_constraintTop_toTopOf="@id/item_image_preview" />
+                app:layout_constraintTop_toTopOf="@id/itemImagePreview" />
 
             <Spinner
                 android:id="@+id/spinner_item_type"
@@ -71,8 +72,8 @@
                 android:layout_marginStart="16dp"
                 android:background="@drawable/spinner_background"
                 android:entries="@array/item_types_array"
+                app:layout_constraintStart_toEndOf="@id/itemImagePreview"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/item_image_preview"
                 app:layout_constraintTop_toBottomOf="@id/label_item_type" />
 
             <TextView
@@ -82,9 +83,9 @@
                 android:layout_marginTop="8dp"
                 android:text="Size"
                 android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="@id/spinner_item_type"
+                app:layout_constraintTop_toBottomOf="@id/spinner_item_type"
                 app:layout_constraintStart_toStartOf="@id/spinner_item_type"
-                app:layout_constraintTop_toBottomOf="@id/spinner_item_type" />
+                app:layout_constraintEnd_toEndOf="@id/spinner_item_type" />
 
             <Spinner
                 android:id="@+id/spinner_size"
@@ -92,9 +93,9 @@
                 android:layout_height="48dp"
                 android:background="@drawable/spinner_background"
                 android:entries="@array/general_sizes_array"
-                app:layout_constraintEnd_toEndOf="@id/spinner_item_type"
+                app:layout_constraintTop_toBottomOf="@id/label_size"
                 app:layout_constraintStart_toStartOf="@id/spinner_item_type"
-                app:layout_constraintTop_toBottomOf="@id/label_size" />
+                app:layout_constraintEnd_toEndOf="@id/spinner_item_type" />
 
             <TextView
                 android:id="@+id/label_color"
@@ -103,9 +104,9 @@
                 android:layout_marginTop="8dp"
                 android:text="Colour"
                 android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="@id/spinner_size"
-                app:layout_constraintStart_toStartOf="@id/spinner_size"
-                app:layout_constraintTop_toBottomOf="@id/spinner_size" />
+                app:layout_constraintTop_toBottomOf="@id/spinner_size"
+                app:layout_constraintStart_toStartOf="@id/spinner_item_type"
+                app:layout_constraintEnd_toEndOf="@id/spinner_item_type" />
 
             <Spinner
                 android:id="@+id/spinner_color"
@@ -113,19 +114,19 @@
                 android:layout_height="48dp"
                 android:background="@drawable/spinner_background"
                 android:entries="@array/item_colors_array"
-                app:layout_constraintEnd_toEndOf="@id/spinner_size"
-                app:layout_constraintStart_toStartOf="@id/spinner_size"
-                app:layout_constraintTop_toBottomOf="@id/label_color" />
+                app:layout_constraintTop_toBottomOf="@id/label_color"
+                app:layout_constraintStart_toStartOf="@id/spinner_item_type"
+                app:layout_constraintEnd_toEndOf="@id/spinner_item_type" />
 
-            <!-- THE FIX IS HERE: This is an invisible barrier that sits below both the image and the spinners. -->
+            <!-- Barrier to align below image or spinners -->
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/top_section_barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="item_image_preview,spinner_color" />
+                app:constraint_referenced_ids="itemImagePreview,spinner_color" />
 
-            <!-- This is the "Item Title" input field, now constrained to the barrier. -->
+            <!-- Item Title Input -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_item_title"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -144,7 +145,7 @@
                     android:textColor="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- This GridLayout holds the rest of the form fields. -->
+            <!-- Grid layout for more fields -->
             <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/grid_details"
                 android:layout_width="match_parent"
@@ -189,7 +190,7 @@
                     android:entries="@array/item_periods_array"
                     app:layout_columnWeight="1" />
 
-                <!-- I've added the "Date Found" label and button here. -->
+                <!-- Date Found Button -->
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -202,7 +203,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_columnWeight="1" /> <!-- This is an empty spacer -->
+                    app:layout_columnWeight="1" /> <!-- spacer -->
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_date_found"
@@ -220,7 +221,7 @@
 
             </androidx.gridlayout.widget.GridLayout>
 
-            <!-- This is the multi-line text box for notes. -->
+            <!-- Notes Field -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_notes"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -241,7 +242,7 @@
                     android:textColor="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- This is the final submit button for the form. -->
+            <!-- Submit Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"

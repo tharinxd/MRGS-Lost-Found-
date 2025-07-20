@@ -9,12 +9,16 @@ import java.util.Date
 data class Item(
     val userId: String = "",
     val title: String = "",
-    val type: String = "", // I added this missing 'type' property.
+    val type: String = "",
     val location: String = "",
     val size: String = "",
     val period: String = "",
     val color: String = "",
     val notes: String = "",
-    @ServerTimestamp val dateLost: Date? = null,
+    val imageUrl: String? = null, // Optional image URL
+
+    @ServerTimestamp val dateLost: Date? = null,   // For lost items
+    @ServerTimestamp val dateFound: Date? = null,  //  For found items
+
     @ServerTimestamp val reportTimestamp: Date? = null
 ) : Parcelable
