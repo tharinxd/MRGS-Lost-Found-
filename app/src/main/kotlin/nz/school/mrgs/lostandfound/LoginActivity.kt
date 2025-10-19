@@ -97,12 +97,12 @@ class LoginActivity : AppCompatActivity() {
 
                     if (user != null && user.email != null && user.email!!.endsWith(schoolDomain)) {
                         // The email matches the school domain! So I let them in.
-                        // Toast.makeText(this, "School account verified.", Toast.LENGTH_SHORT).show()
+                         Toast.makeText(this, "School account verified.", Toast.LENGTH_SHORT).show()
                         navigateToDashboard()
                     } else {
                         // This runs if they logged in with a non-school email, like a personal gmail.
                         // I show them an error message telling them they need to use a school account.
-                        // Toast.makeText(this, "Only users from the $schoolDomain domain are allowed.", Toast.LENGTH_LONG).show()
+                         Toast.makeText(this, "Only users from the $schoolDomain domain are allowed.", Toast.LENGTH_LONG).show()
 
                         // Then I immediately sign them out of both Firebase and Google.
                         // Signing out of the Google client is important because it lets them
@@ -112,7 +112,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 } else {
                     // This happens if the sign-in with Firebase fails for other reasons.
-                    // Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show()
+                     Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show()
                 }
             }
     }
