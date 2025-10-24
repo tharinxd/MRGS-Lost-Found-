@@ -29,6 +29,7 @@ class ReportFoundItemActivity : AppCompatActivity() {
     private val storage = Firebase.storage
     private var selectedDate: Calendar = Calendar.getInstance()
     private var imageUri: Uri? = null
+    private var dateSelected = false // Flag to check if date has been selected
 
     private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
@@ -81,6 +82,7 @@ class ReportFoundItemActivity : AppCompatActivity() {
 
     private fun setupClickListeners() {
         binding.btnSubmit.setOnClickListener {
+            it.isEnabled = false // Disable button
             submitReport()
         }
 
@@ -102,11 +104,15 @@ class ReportFoundItemActivity : AppCompatActivity() {
                 selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 binding.btnDateFound.text = dateFormat.format(selectedDate.time)
+                dateSelected = true // Set flag
             },
             selectedDate.get(Calendar.YEAR),
             selectedDate.get(Calendar.MONTH),
             selectedDate.get(Calendar.DAY_OF_MONTH)
         )
+
+        // Prevent selecting a date in the future.
+        datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
         datePickerDialog.show()
     }
 
@@ -116,11 +122,39 @@ class ReportFoundItemActivity : AppCompatActivity() {
 
         if (currentUser == null) {
             Toast.makeText(this, "You must be logged in to report an item.", Toast.LENGTH_SHORT).show()
+            binding.btnSubmit.isEnabled = true // Re-enable button
             return
         }
 
         if (title.isEmpty()) {
             binding.etItemTitle.error = "Title cannot be empty"
+            binding.btnSubmit.isEnabled = true // Re-enable button
+            return
+        }
+
+        if (!title.any { it.isLetter() }) {
+            binding.etItemTitle.error = "Title must contain letters and not just symbols/numbers"
+            binding.btnSubmit.isEnabled = true // Re-enable button
+            return
+        }
+
+        if (!dateSelected) {
+            Toast.makeText(this, "Please select the date the item was found.", Toast.LENGTH_LONG).show()
+            binding.btnSubmit.isEnabled = true // Re-enable button
+            return
+        }
+
+        val itemType = binding.spinnerItemType.selectedItem.toString()
+        if (itemType.startsWith("Select")) {
+            Toast.makeText(this, "Please select an item type.", Toast.LENGTH_SHORT).show()
+            binding.btnSubmit.isEnabled = true // Re-enable button
+            return
+        }
+
+        val color = binding.spinnerColor.selectedItem.toString()
+        if (color.startsWith("Select")) {
+            Toast.makeText(this, "Please select a color.", Toast.LENGTH_SHORT).show()
+            binding.btnSubmit.isEnabled = true // Re-enable button
             return
         }
 
@@ -161,12 +195,12 @@ class ReportFoundItemActivity : AppCompatActivity() {
             title = binding.etItemTitle.text.toString().trim(),
             type = binding.spinnerItemType.selectedItem.toString(),
             location = binding.spinnerLocation.selectedItem.toString(),
-            size = binding.spinnerSize.selectedItem.toString(),
+            size = binding.spinnerSize.selectedItem?.toString() ?: "N/A",
             period = binding.spinnerPeriod.selectedItem.toString(),
             color = binding.spinnerColor.selectedItem.toString(),
             notes = binding.etNotes.text.toString().trim(),
             imageUrl = imageUrl ?: "", // empty string if no image
-            dateLost = selectedDate.time
+            dateFound = selectedDate.time // Changed from dateLost to dateFound
         )
 
         db.collection("foundItems")
@@ -178,6 +212,7 @@ class ReportFoundItemActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Log.e("FIRESTORE_FAILURE", "Error reporting item.", e)
                 Toast.makeText(this, "Error reporting item: ${e.message}", Toast.LENGTH_LONG).show()
+                binding.btnSubmit.isEnabled = true // Re-enable button on failure
             }
     }
 }

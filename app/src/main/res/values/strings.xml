@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">MRGS Lost &amp; Found™</string>
 
-    <!-- The list of item types a user can select -->
-    <string-array name="item_types_array">
-        <!-- Clothing -->
+    <!-- Arrays for Filtering -->
+    <string-array name="item_types_filter_array">
+        <item>All Items</item>
         <item>Shoes</item>
         <item>Boots</item>
         <item>Uniform</item>
@@ -14,31 +14,23 @@
         <item>Scarf / Gloves</item>
         <item>Socks</item>
         <item>Tie</item>
-
-        <!-- Bags -->
         <item>Backpack</item>
         <item>Pencil Case</item>
         <item>Lunchbox</item>
         <item>Tote Bag</item>
         <item>Laptop Bag</item>
-
-        <!-- Electronics -->
         <item>Phone</item>
         <item>Earbuds / Headphones</item>
         <item>Charger / Power Bank</item>
         <item>USB Drive</item>
         <item>Tablet / Laptop</item>
         <item>Smartwatch</item>
-
-        <!-- Stationery & Academic -->
         <item>Books</item>
         <item>Notebook / Folder</item>
         <item>Textbooks</item>
         <item>Calculator</item>
         <item>Ruler / Geometry Set</item>
         <item>Art Supplies</item>
-
-        <!-- Personal / Miscellaneous -->
         <item>Bottle</item>
         <item>ID Card / Bus Pass</item>
         <item>Glasses / Sunglasses</item>
@@ -46,10 +38,105 @@
         <item>Musical Instrument</item>
         <item>Sports Equipment</item>
         <item>Personal Item / Keepsake</item>
-
-        <!-- Fallback -->
         <item>Other</item>
     </string-array>
+
+    <string-array name="item_colors_filter_array">
+        <item>All Colors</item>
+        <item>Black</item>
+        <item>White</item>
+        <item>Blue</item>
+        <item>Red</item>
+        <item>Green</item>
+        <item>Yellow</item>
+        <item>Orange</item>
+        <item>Purple</item>
+        <item>Pink</item>
+        <item>Brown</item>
+        <item>Grey</item>
+        <item>Beige</item>
+        <item>Navy Blue</item>
+        <item>Light Blue</item>
+        <item>Dark Green</item>
+        <item>Maroon</item>
+        <item>Teal</item>
+        <item>Turquoise</item>
+        <item>Gold</item>
+        <item>Silver</item>
+        <item>Transparent</item>
+        <item>Multicolored</item>
+        <item>Leather Black</item>
+        <item>Other</item>
+    </string-array>
+
+    <!-- Arrays for Reporting Forms -->
+    <string-array name="item_types_array">
+        <item>Select Item Type...</item>
+        <item>Shoes</item>
+        <item>Boots</item>
+        <item>Uniform</item>
+        <item>PE Gear</item>
+        <item>Sports Clothing</item>
+        <item>Jacket / Hoodie</item>
+        <item>Hat / Cap</item>
+        <item>Scarf / Gloves</item>
+        <item>Socks</item>
+        <item>Tie</item>
+        <item>Backpack</item>
+        <item>Pencil Case</item>
+        <item>Lunchbox</item>
+        <item>Tote Bag</item>
+        <item>Laptop Bag</item>
+        <item>Phone</item>
+        <item>Earbuds / Headphones</item>
+        <item>Charger / Power Bank</item>
+        <item>USB Drive</item>
+        <item>Tablet / Laptop</item>
+        <item>Smartwatch</item>
+        <item>Books</item>
+        <item>Notebook / Folder</item>
+        <item>Textbooks</item>
+        <item>Calculator</item>
+        <item>Ruler / Geometry Set</item>
+        <item>Art Supplies</item>
+        <item>Bottle</item>
+        <item>ID Card / Bus Pass</item>
+        <item>Glasses / Sunglasses</item>
+        <item>Keys</item>
+        <item>Musical Instrument</item>
+        <item>Sports Equipment</item>
+        <item>Personal Item / Keepsake</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="item_colors_array">
+        <item>Select Color...</item>
+        <item>Black</item>
+        <item>White</item>
+        <item>Blue</item>
+        <item>Red</item>
+        <item>Green</item>
+        <item>Yellow</item>
+        <item>Orange</item>
+        <item>Purple</item>
+        <item>Pink</item>
+        <item>Brown</item>
+        <item>Grey</item>
+        <item>Beige</item>
+        <item>Navy Blue</item>
+        <item>Light Blue</item>
+        <item>Dark Green</item>
+        <item>Maroon</item>
+        <item>Teal</item>
+        <item>Turquoise</item>
+        <item>Gold</item>
+        <item>Silver</item>
+        <item>Transparent</item>
+        <item>Multicolored</item>
+        <item>Leather Black</item>
+        <item>Other</item>
+    </string-array>
+
 
     <!-- SIZES: These are now broken into categories -->
 
@@ -142,33 +229,6 @@
         <item>Lunch</item>
         <item>Period 5</item>
         <item>After School</item>
-    </string-array>
-
-    <string-array name="item_colors_array">
-        <item>Black</item>
-        <item>White</item>
-        <item>Blue</item>
-        <item>Red</item>
-        <item>Green</item>
-        <item>Yellow</item>
-        <item>Orange</item>
-        <item>Purple</item>
-        <item>Pink</item>
-        <item>Brown</item>
-        <item>Grey</item>
-        <item>Beige</item>
-        <item>Navy Blue</item>
-        <item>Light Blue</item>
-        <item>Dark Green</item>
-        <item>Maroon</item>
-        <item>Teal</item>
-        <item>Turquoise</item>
-        <item>Gold</item>
-        <item>Silver</item>
-        <item>Transparent</item>
-        <item>Multicolored</item>
-        <item>Leather Black</item>
-        <item>Other</item>
     </string-array>
 
 </resources>

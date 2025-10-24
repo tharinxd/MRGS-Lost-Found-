@@ -4,137 +4,138 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import nz.school.mrgs.lostandfound.data.Item
 import nz.school.mrgs.lostandfound.databinding.ActivityLostitemsactivityBinding
 
-// This is the Kotlin file for my "Lost Items" page.
 class LostItemsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLostitemsactivityBinding
     private lateinit var adapter: LostItemsAdapter
     private val db = Firebase.firestore
 
-    // So, I need a place to store all the items I get from the database,
-    // so I can filter them without having to download them again.
-    private var allItemsList: List<Item> = listOf()
+    // This list will hold the items for the currently displayed category.
+    private var currentItemsList: List<Item> = listOf()
+    private var currentCategory: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // THE FIX IS HERE: I've corrected the binding class name to match the XML file.
         binding = ActivityLostitemsactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // This makes the back button in my toolbar work.
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
 
-        // I'm setting up my adapter here. I pass it an empty list to start with,
-        // and I also give it the code that should run when an item is clicked.
         adapter = LostItemsAdapter(listOf()) { selectedItem ->
-            // For now, I'll just show a message with the item's title.
-            // Later, I can change this to open a new page with the full details.
             val intent = Intent(this, ItemDetailActivity::class.java)
             intent.putExtra("EXTRA_ITEM", selectedItem)
             startActivity(intent)
         }
         binding.recyclerViewLostItems.adapter = adapter
 
-        // This function will get the data from my Firestore database.
-        fetchLostItems()
+        // Get the category from the intent that started this activity.
+        currentCategory = intent.getStringExtra("CATEGORY")
 
-        // This new function sets up the listeners for my search and filter controls.
+        // Set the spinner to the correct category passed from the previous screen.
+        currentCategory?.let {
+            val categoryAdapter = binding.spinnerCategory.adapter as ArrayAdapter<String>
+            val position = categoryAdapter.getPosition(it)
+            if (position >= 0) {
+                binding.spinnerCategory.setSelection(position)
+            }
+        }
+
+        // Fetch items for the initially selected category.
+        fetchItemsForCategory(currentCategory)
+
+        // Setup listeners for local filtering.
         setupFilterControls()
     }
 
-    // This is the new function that makes the search and filters work.
     private fun setupFilterControls() {
-        // This is the listener for the search bar.
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            // This runs every time the user types a letter.
             override fun onQueryTextChange(newText: String?): Boolean {
-                filterList()
+                applyLocalFilters()
                 return true
             }
-            // This would run if the user hit the 'enter' key, but I don't need it for now.
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
+            override fun onQueryTextSubmit(query: String?): Boolean { return false }
         })
 
-        // This is the listener for the category dropdown.
+        // This listener re-fetches from Firestore when the user selects a different category.
         binding.spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                filterList() // When the user picks a new category, I re-filter the list.
+                val selectedCategory = parent?.getItemAtPosition(position).toString()
+                if (currentCategory != selectedCategory) {
+                    currentCategory = selectedCategory
+                    fetchItemsForCategory(currentCategory)
+                }
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        // This is the listener for the color dropdown.
+        // The color spinner just filters the list we already have.
         binding.spinnerColor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                filterList() // When the user picks a new color, I re-filter the list.
+                applyLocalFilters()
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
-    // This is my main filtering function. It gets called whenever the user searches or changes a filter.
-    private fun filterList() {
-        // First, I get the current text from the search bar.
-        val query = binding.searchView.query.toString().lowercase()
-        // Then I get the selected category and color from the dropdowns.
-        val selectedCategory = binding.spinnerCategory.selectedItem.toString()
+    // This function filters the list that is already in memory.
+    private fun applyLocalFilters() {
+        val searchQuery = binding.searchView.query.toString().lowercase()
         val selectedColor = binding.spinnerColor.selectedItem.toString()
 
-        // I start with my full list of items.
-        var filteredList = allItemsList
+        var filteredList = currentItemsList
 
-        // If the user has typed something in the search bar, I filter the list.
-        // I'm only keeping items whose title contains the search text.
-        if (query.isNotEmpty()) {
-            filteredList = filteredList.filter { item ->
-                item.title.lowercase().contains(query)
-            }
+        if (searchQuery.isNotEmpty()) {
+            filteredList = filteredList.filter { it.title.lowercase().contains(searchQuery) }
         }
 
-        // Now I filter by category, but only if they haven't selected the default "Other" or a general category.
-        // This is a simple way to have an "All" filter.
-        if (binding.spinnerCategory.selectedItemPosition > 0) { // This checks if a real category is selected
-            filteredList = filteredList.filter { item ->
-                item.type == selectedCategory
-            }
+        // Correctly filter by color, allowing for "All Colors"
+        if (selectedColor != "All Colors") {
+            filteredList = filteredList.filter { it.color == selectedColor }
         }
 
-        // I do the same thing for the color filter.
-        if (binding.spinnerColor.selectedItemPosition > 0) { // This checks if a real color is selected
-            filteredList = filteredList.filter { item ->
-                item.color == selectedColor
-            }
-        }
-
-        // Finally, I update the adapter with the new, fully filtered list.
         adapter.updateItems(filteredList)
     }
 
-    // This is the function that connects to Firestore and gets all the lost item reports.
-    private fun fetchLostItems() {
-        db.collection("lostItems")
-            .get()
+    // This function fetches from Firestore based on the category.
+    private fun fetchItemsForCategory(category: String?) {
+        // DEFENSIVE CHECK: If no category is passed, show an empty list. This is key.
+        if (category.isNullOrEmpty()) {
+            currentItemsList = emptyList()
+            applyLocalFilters() // Update the adapter with the empty list.
+            Toast.makeText(this, "No category was selected.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val query: Query = if (category == "All Items") {
+            db.collection("lostItems")
+        } else {
+            db.collection("lostItems").whereEqualTo("type", category)
+        }
+
+        query.get()
             .addOnSuccessListener { result ->
-                // If it successfully gets the data, it converts the documents into my 'Item' data class.
-                allItemsList = result.toObjects(Item::class.java)
-                // Now that I have the full list, I call filterList() to display it for the first time.
-                filterList()
+                currentItemsList = result.toObjects(Item::class.java)
+                // Reset local filters and display the new list.
+                binding.searchView.setQuery("", false)
+                binding.spinnerColor.setSelection(0)
+                applyLocalFilters()
             }
             .addOnFailureListener { exception ->
-                // If there's an error, I just show a message.
                 Toast.makeText(this, "Error getting items: ${exception.message}", Toast.LENGTH_SHORT).show()
+                currentItemsList = emptyList()
+                applyLocalFilters()
             }
     }
 }
